@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+<title>أسئلة المقابلات البرمجية</title>
+<meta name="description" content="منصة تفاعلية للاستعداد للمقابلات البرمجية بالعربية: أكثر من 1000 سؤال، شروحات، اختبارات، ومقابلات وهمية." />
+<meta name="author" content="@prof.i3lam_ali — instagram.com/prof.i3lam_ali" />
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#3654F4" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="مقابلاتي" />
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png" />
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============================= شاشة البداية ============================= -->
+<div id="splash">
+  <div class="splash-mark">&lt;/&gt;</div>
+  <div class="splash-title">أسئلة المقابلات البرمجية</div>
+  <div class="splash-sub">استعد للمقابلة القادمة بثقة</div>
+  <div class="splash-credit">@prof.i3lam_ali</div>
+  <div class="splash-bar"><span></span></div>
+</div>
+
+<div id="app">
+
+  <!-- ============================= الشريط العلوي ============================= -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">&lt;/&gt;</span>
+      <span id="topbar-title">أسئلة المقابلات</span>
+    </div>
+    <div class="actions">
+      <button class="icon-btn" id="btn-theme" aria-label="تبديل المظهر">🌙</button>
+      <button class="icon-btn" id="btn-search-top" aria-label="بحث">🔍</button>
+    </div>
+  </header>
+
+  <!-- ============================= الصفحة الرئيسية ============================= -->
+  <main class="view active" id="view-home">
+    <section class="hero">
+      <span class="hero-eyebrow">✨ خطتك اليومية جاهزة</span>
+      <h1>استعد للمقابلات البرمجية بثقة</h1>
+      <p class="lead">أكثر من 1000 سؤال حقيقي من مقابلات الشركات الناشئة والتقنية الكبرى، مع شروحات مفصّلة وأمثلة عملية ونصائح للمحاور.</p>
+
+      <div class="flashcard-demo" id="home-flashcard">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <span class="card-tag" id="fc-domain">JavaScript</span>
+            <p class="card-q" id="fc-question">ما الفرق بين let وvar وconst؟</p>
+            <p class="card-hint">اضغط لعرض الإجابة ↺</p>
+          </div>
+          <div class="card-face card-back">
+            <span class="card-tag">الإجابة</span>
+            <p class="card-a" id="fc-answer">...</p>
+            <p class="card-hint">اضغط للعودة ↺</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-block" id="btn-start-training">ابدأ التدريب</button>
+        <button class="btn btn-secondary" id="btn-daily-home">🔥 التحدي اليومي</button>
+      </div>
+    </section>
+
+    <div class="stats-row" id="home-stats"></div>
+
+    <div class="section-heading">
+      <h2>الأقسام</h2>
+      <span class="link" data-nav="sections">عرض الكل ←</span>
+    </div>
+    <div class="grid-cards" id="home-sections-preview"></div>
+
+    <div class="section-heading">
+      <h2>وصلت إليه مؤخرًا</h2>
+    </div>
+    <div id="home-recent"><div class="empty-state"><p>لم تبدأ أي أسئلة بعد — جرّب سؤالًا من الأعلى!</p></div></div>
+
+    <a class="credit-line" href="https://www.instagram.com/prof.i3lam_ali/" target="_blank" rel="noopener">
+      <span class="credit-icon">📷</span>
+      <span>تابعنا على انستغرام</span>
+      <span class="term-en credit-handle">@prof.i3lam_ali</span>
+    </a>
+  </main>
+
+  <!-- ============================= قائمة الأقسام ============================= -->
+  <main class="view" id="view-sections">
+    <h1 style="font-size:20px;font-weight:900;margin-bottom:4px;">كل الأقسام</h1>
+    <p style="font-size:12.5px;color:var(--ink-soft);margin-bottom:16px;">اختر قسمًا لتبدأ التدريب على أسئلته</p>
+    <div class="grid-cards" id="sections-full-grid"></div>
+  </main>
+
+  <!-- ============================= تفاصيل القسم ============================= -->
+  <main class="view" id="view-section-detail">
+    <button class="btn-ghost" data-nav="sections" style="margin-bottom:8px;">← رجوع للأقسام</button>
+    <div class="section-hero">
+      <div class="icon-lg" id="sd-icon">🧩</div>
+      <div>
+        <h1 id="sd-title">القسم</h1>
+        <p id="sd-desc">الوصف</p>
+      </div>
+    </div>
+
+    <div class="action-tiles">
+      <button class="action-tile" id="sd-start-practice">
+        <span class="tile-icon">📖</span><span class="tile-label">تدرّب على الأسئلة</span>
+      </button>
+      <button class="action-tile" id="sd-start-quiz">
+        <span class="tile-icon">✅</span><span class="tile-label">اختبار سريع</span>
+      </button>
+      <button class="action-tile" id="sd-start-interview">
+        <span class="tile-icon">🎙️</span><span class="tile-label">مقابلة وهمية</span>
+      </button>
+      <button class="action-tile" id="sd-view-concepts">
+        <span class="tile-icon">💡</span><span class="tile-label">أهم المفاهيم</span>
+      </button>
+    </div>
+
+    <div class="filter-chips" id="sd-filter-chips"></div>
+    <div id="sd-questions-list"></div>
+  </main>
+
+  <!-- ============================= أهم المفاهيم ============================= -->
+  <main class="view" id="view-concepts">
+    <button class="btn-ghost" id="concepts-back" style="margin-bottom:8px;">← رجوع للقسم</button>
+    <h1 style="font-size:19px;font-weight:900;margin-bottom:14px;" id="concepts-title">أهم المفاهيم</h1>
+    <div id="concepts-list"></div>
+  </main>
+
+  <!-- ============================= تفاصيل السؤال ============================= -->
+  <main class="view" id="view-question">
+    <button class="btn-ghost" id="q-back" style="margin-bottom:8px;">← رجوع</button>
+
+    <div class="q-header">
+      <div class="q-meta-row">
+        <span class="badge" id="q-difficulty-badge">متوسط</span>
+        <span class="badge badge-neutral" id="q-domain-badge">القسم</span>
+        <span class="badge badge-neutral" id="q-type-badge">سؤال مفتوح</span>
+      </div>
+      <div class="flex-between">
+        <h2 class="q-title" id="q-title" style="flex:1;">عنوان السؤال</h2>
+        <button class="fav-toggle" id="q-fav-btn">☆</button>
+      </div>
+      <div class="q-time" id="q-time">⏱️ الوقت المتوقع: 3 دقائق</div>
+    </div>
+
+    <div class="q-block">
+      <h3>❓ نص السؤال</h3>
+      <div class="q-text-body" id="q-body"></div>
+    </div>
+
+    <div class="q-block answer-block">
+      <h3>✅ الإجابة النموذجية</h3>
+      <div class="q-text-body" id="q-answer"></div>
+    </div>
+
+    <div class="q-block">
+      <h3>📘 شرح مفصّل</h3>
+      <div class="q-text-body" id="q-explanation"></div>
+    </div>
+
+    <div class="q-block" id="q-example-block">
+      <h3>💻 مثال عملي</h3>
+      <div class="code-box" id="q-example-code"></div>
+    </div>
+
+    <div class="q-block">
+      <h3>⭐ أفضل الممارسات</h3>
+      <ul class="dash-list" id="q-best-practices"></ul>
+    </div>
+
+    <div class="q-block mistakes-block">
+      <h3>⚠️ الأخطاء الشائعة</h3>
+      <ul class="dash-list" id="q-mistakes"></ul>
+    </div>
+
+    <div class="q-block tips-block" id="q-followup-block">
+      <h3>🗣️ أسئلة متابعة متوقعة من المحاور</h3>
+      <ul class="dash-list" id="q-followups"></ul>
+    </div>
+
+    <div class="q-block">
+      <h3>🔗 أسئلة مشابهة</h3>
+      <div class="similar-tags" id="q-similar"></div>
+    </div>
+
+    <div class="q-nav-bar">
+      <button class="btn btn-secondary" id="q-prev">→ السابق</button>
+      <button class="btn btn-primary" id="q-next">التالي ←</button>
+    </div>
+  </main>
+
+  <!-- ============================= الاختبار Quiz ============================= -->
+  <main class="view" id="view-quiz">
+    <div class="flex-between" style="margin-bottom:10px;">
+      <button class="btn-ghost" id="quiz-exit">✕ إنهاء</button>
+      <span id="quiz-section-name" style="font-size:12.5px;font-weight:700;color:var(--ink-soft);"></span>
+    </div>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div></div>
+
+    <div id="quiz-body"></div>
+  </main>
+
+  <!-- ============================= نتيجة الاختبار ============================= -->
+  <main class="view" id="view-quiz-result">
+    <h1 class="text-center" style="font-size:19px;font-weight:900;">نتيجة الاختبار 🎉</h1>
+    <div class="result-ring-wrap">
+      <div class="result-ring">
+        <svg viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+          <circle class="ring-fill" id="result-ring-fill" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <div class="ring-label">
+          <div class="ring-num" id="result-pct">0%</div>
+          <div class="ring-sub">نسبة النجاح</div>
+        </div>
+      </div>
+    </div>
+    <div class="result-stats">
+      <div class="rstat"><div class="num" id="result-correct">0</div><div class="lab">إجابات صحيحة</div></div>
+      <div class="rstat"><div class="num" id="result-wrong">0</div><div class="lab">إجابات خاطئة</div></div>
+      <div class="rstat"><div class="num" id="result-time">0:00</div><div class="lab">الوقت المستغرق</div></div>
+    </div>
+    <div class="weak-strong-row">
+      <div class="ws-card strong"><h4>💪 نقاط القوة</h4><ul id="result-strong"></ul></div>
+      <div class="ws-card weak"><h4>🎯 نقاط تحتاج مراجعة</h4><ul id="result-weak"></ul></div>
+    </div>
+    <button class="btn btn-primary btn-block" id="quiz-retry">إعادة الاختبار</button>
+    <button class="btn btn-secondary btn-block mt-8" data-nav="sections">العودة للأقسام</button>
+  </main>
+
+  <!-- ============================= إعداد المقابلة الوهمية ============================= -->
+  <main class="view" id="view-interview-setup">
+    <h1 style="font-size:19px;font-weight:900;margin-bottom:4px;">🎙️ المقابلة الوهمية</h1>
+    <p style="font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;">جهّز إعدادات المقابلة قبل البدء</p>
+
+    <div class="interview-setup-card">
+      <label>القسم</label>
+      <div class="select-grid" id="interview-section-select"></div>
+    </div>
+
+    <div class="interview-setup-card">
+      <label>عدد الأسئلة</label>
+      <div class="stepper">
+        <button id="interview-count-minus">−</button>
+        <span class="stepper-val" id="interview-count-val">10</span>
+        <button id="interview-count-plus">+</button>
+      </div>
+    </div>
+
+    <div class="interview-setup-card">
+      <label>الوقت لكل سؤال</label>
+      <div class="select-grid">
+        <div class="opt" data-time="60">دقيقة</div>
+        <div class="opt active" data-time="120">دقيقتان</div>
+        <div class="opt" data-time="180">3 دقائق</div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-block" id="interview-start-btn">ابدأ المقابلة</button>
+  </main>
+
+  <!-- ============================= المقابلة الوهمية - أثناء التشغيل ============================= -->
+  <main class="view" id="view-interview-run">
+    <div class="flex-between" style="margin-bottom:10px;">
+      <button class="btn-ghost" id="interview-exit">✕ إنهاء المقابلة</button>
+      <span id="interview-progress-label" style="font-size:12.5px;font-weight:700;color:var(--ink-soft);"></span>
+    </div>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="interview-progress-fill" style="width:0%"></div></div>
+    <div class="quiz-timer" id="interview-timer">⏱️ 02:00</div>
+
+    <div class="quiz-question-card">
+      <div class="q-count" id="interview-q-domain">القسم</div>
+      <p class="q-stem" id="interview-q-stem">نص السؤال</p>
+    </div>
+
+    <textarea id="interview-answer-input" placeholder="اكتب إجابتك هنا... (اختياري - لتقييم ذاتي أفضل)" rows="6"
+      style="width:100%;padding:14px;border-radius:16px;border:1.5px solid var(--border);background:var(--surface);color:var(--ink);font-family:inherit;font-size:13.5px;margin-bottom:14px;resize:vertical;"></textarea>
+
+    <button class="btn btn-primary btn-block" id="interview-reveal-btn">عرض الإجابة النموذجية</button>
+
+    <div id="interview-model-answer-wrap" class="hidden" style="margin-top:14px;">
+      <div class="q-block answer-block">
+        <h3>✅ الإجابة النموذجية</h3>
+        <div class="q-text-body" id="interview-model-answer"></div>
+      </div>
+      <p style="font-size:12.5px;font-weight:700;margin:14px 0 8px;">قيّم إجابتك بنفسك:</p>
+      <div class="select-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="opt self-rate" data-rate="1">ضعيفة</div>
+        <div class="opt self-rate" data-rate="2">مقبولة</div>
+        <div class="opt self-rate" data-rate="3">ممتازة</div>
+      </div>
+      <button class="btn btn-primary btn-block mt-16" id="interview-next-btn">السؤال التالي ←</button>
+    </div>
+  </main>
+
+  <!-- ============================= نتيجة المقابلة الوهمية ============================= -->
+  <main class="view" id="view-interview-result">
+    <h1 class="text-center" style="font-size:19px;font-weight:900;">تقرير المقابلة 📊</h1>
+    <div class="result-ring-wrap">
+      <div class="result-ring">
+        <svg viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+          <circle class="ring-fill" id="ir-ring-fill" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <div class="ring-label">
+          <div class="ring-num" id="ir-pct">0%</div>
+          <div class="ring-sub">التقييم الذاتي</div>
+        </div>
+      </div>
+    </div>
+    <div class="result-stats">
+      <div class="rstat"><div class="num" id="ir-excellent">0</div><div class="lab">ممتازة</div></div>
+      <div class="rstat"><div class="num" id="ir-ok">0</div><div class="lab">مقبولة</div></div>
+      <div class="rstat"><div class="num" id="ir-weak">0</div><div class="lab">ضعيفة</div></div>
+    </div>
+    <div class="weak-strong-row">
+      <div class="ws-card strong"><h4>💪 نقاط القوة</h4><ul id="ir-strong"></ul></div>
+      <div class="ws-card weak"><h4>🎯 يحتاج تحسين</h4><ul id="ir-weak-list"></ul></div>
+    </div>
+    <button class="btn btn-primary btn-block" data-nav="interview-setup">مقابلة جديدة</button>
+    <button class="btn btn-secondary btn-block mt-8" data-nav="home">العودة للرئيسية</button>
+  </main>
+
+  <!-- ============================= التحدي اليومي ============================= -->
+  <main class="view" id="view-daily">
+    <h1 style="font-size:19px;font-weight:900;margin-bottom:4px;">🔥 التحدي اليومي</h1>
+    <p style="font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;">سؤال واحد كل يوم يحافظ على سلسلتك مشتعلة</p>
+    <div class="streak-row" style="margin-bottom:18px;">
+      <span class="flame">🔥</span>
+      <div>
+        <div class="streak-num" id="daily-streak-num">0 يوم</div>
+        <div class="streak-lab">سلسلة الأيام المتتالية</div>
+      </div>
+      <div class="streak-days" id="daily-streak-days"></div>
+    </div>
+    <div id="daily-question-wrap"></div>
+  </main>
+
+  <!-- ============================= البحث ============================= -->
+  <main class="view" id="view-search">
+    <div class="search-bar">
+      <span>🔍</span>
+      <input type="text" id="search-input" placeholder="ابحث في أكثر من 1000 سؤال..." />
+    </div>
+    <div id="search-results"></div>
+  </main>
+
+  <!-- ============================= المفضلة ============================= -->
+  <main class="view" id="view-favorites">
+    <h1 style="font-size:19px;font-weight:900;margin-bottom:14px;">⭐ الأسئلة المفضّلة</h1>
+    <div id="favorites-list"></div>
+  </main>
+
+  <!-- ============================= لوحة التحكم ============================= -->
+  <main class="view" id="view-dashboard">
+    <div class="dash-hero">
+      <div class="dash-ring-wrap">
+        <svg viewBox="0 0 90 90">
+          <circle class="ring-bg" cx="45" cy="45" r="38"></circle>
+          <circle class="ring-fill" id="dash-ring-fill" cx="45" cy="45" r="38"></circle>
+        </svg>
+        <div class="ring-txt" id="dash-ring-txt">0%</div>
+      </div>
+      <div class="dash-hero-info">
+        <h3>نسبة إنجازك الإجمالية</h3>
+        <p id="dash-hero-sub">أكمل المزيد من الأسئلة لرفع نسبتك</p>
+      </div>
+    </div>
+
+    <div class="streak-row">
+      <span class="flame">🔥</span>
+      <div>
+        <div class="streak-num" id="dash-streak-num">0 يوم</div>
+        <div class="streak-lab">سلسلة متتالية</div>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="dash-metric"><div class="m-icon">📗</div><div class="m-val" id="dash-answered">0</div><div class="m-lab">سؤال مجاب</div></div>
+      <div class="dash-metric"><div class="m-icon">✅</div><div class="m-val" id="dash-quizzes">0</div><div class="m-lab">اختبار مكتمل</div></div>
+      <div class="dash-metric"><div class="m-icon">📊</div><div class="m-val" id="dash-avg">0%</div><div class="m-lab">متوسط النتائج</div></div>
+      <div class="dash-metric"><div class="m-icon">🎙️</div><div class="m-val" id="dash-interviews">0</div><div class="m-lab">مقابلة وهمية</div></div>
+    </div>
+
+    <div class="section-heading"><h2>أفضل الأقسام</h2></div>
+    <div class="best-sections-list" id="dash-best-sections"></div>
+
+    <div class="section-heading"><h2>الشارات 🏅</h2><span class="link" data-nav="badges">عرض الكل ←</span></div>
+    <div class="badges-grid" id="dash-badges-preview"></div>
+
+    <div class="section-heading"><h2>آخر نشاط</h2></div>
+    <div id="dash-recent-activity"></div>
+
+    <a class="credit-line" href="https://www.instagram.com/prof.i3lam_ali/" target="_blank" rel="noopener">
+      <span class="credit-icon">📷</span>
+      <span>تابعنا على انستغرام</span>
+      <span class="term-en credit-handle">@prof.i3lam_ali</span>
+    </a>
+  </main>
+
+  <!-- ============================= الشارات ============================= -->
+  <main class="view" id="view-badges">
+    <button class="btn-ghost" data-nav="dashboard" style="margin-bottom:8px;">← رجوع للوحة التحكم</button>
+    <h1 style="font-size:19px;font-weight:900;margin-bottom:14px;">🏅 الشارات</h1>
+    <div class="badges-grid" id="badges-full-grid"></div>
+
+    <div class="section-heading"><h2>🎓 الشهادة</h2></div>
+    <div id="certificate-wrap"></div>
+  </main>
+
+</div>
+
+<!-- ============================= الشريط السفلي ============================= -->
+<nav class="tab-bar" id="tab-bar">
+  <button data-nav="home" class="active">
+    <span class="tab-icon">🏠</span><span>الرئيسية</span>
+  </button>
+  <button data-nav="sections">
+    <span class="tab-icon">📚</span><span>الأقسام</span>
+  </button>
+  <button data-nav="search">
+    <span class="tab-icon">🔍</span><span>بحث</span>
+  </button>
+  <button data-nav="favorites">
+    <span class="tab-icon">⭐</span><span>المفضلة</span>
+  </button>
+  <button data-nav="dashboard">
+    <span class="tab-icon-wrap"><span class="tab-icon">📊</span></span><span>حسابي</span>
+  </button>
+</nav>
+
+<div id="toast-host"></div>
+
+<script src="questions.js"></script>
+<script src="progress.js"></script>
+<script src="search.js"></script>
+<script src="quiz.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
